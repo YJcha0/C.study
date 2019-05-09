@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>//好像可以了嚯
+#include <stdlib.h>
 
 #define NAME_NUMBER 10         /*定义姓名最大长度*/
 #define ID_NUMBER 9            /*定义学号长度*/
@@ -14,7 +14,7 @@ int student_number = 0; /*记录此时已经存入的学生个数*/
 struct student
 {
     char name[NAME_NUMBER];
-    int id[ID_NUMBER];
+    char id[ID_NUMBER];
     char sex[SEX_NUMBER];
     float score[SCORE_NUMBER];
     float averageSCore;
@@ -31,18 +31,18 @@ void InitScore(FILE *fp, STUDENT *stu)
 {
     int i;
     STUDENT *p;
-    for (i=0,p = stu; p < p + MAX_STUDENT_NUMBER; p++)
+    for (i = 0, p = stu; p < p + MAX_STUDENT_NUMBER; p++)
     {
-        if(fgetc(fp) == EOF)
+        if (fgetc(fp) == EOF)
         {
             break;
         }
         fscanf(fp, "%s", p->name);
         fscanf(fp, "%d", p->id);
         fscanf(fp, "%s", p->sex);
-        fscanf(fp, "%s", p->score[0]);
-        fscanf(fp, "%s", p->score[1]);
-        fscanf(fp, "%s", p->score[2]);
+        fscanf(fp, "%f", p->score[0]);
+        fscanf(fp, "%f", p->score[1]);
+        fscanf(fp, "%f", p->score[2]);
         i++;
     }
     student_number = i;
@@ -223,7 +223,7 @@ int main()
     char ch;
     int m, n;
     FILE *fp = fopen("F:\\Study\\IT\\C\\Project\\table\\datas.dat", "at+");
-    InitScore(fp,stu);
+    InitScore(fp, stu);
     if (fp != NULL)
     {
 
