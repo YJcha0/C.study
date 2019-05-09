@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <stdlib.h>
+#include <stdlib.h>//添加个东西测试一下
 
 #define NAME_NUMBER 10         /*定义姓名最大长度*/
 #define ID_NUMBER 9            /*定义学号长度*/
