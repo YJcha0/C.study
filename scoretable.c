@@ -3,13 +3,13 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#define NAME_NUMBER 10         /*å®šä¹‰å§“åæœ€å¤§é•¿åº¦*/
-#define ID_NUMBER 9            /*å®šä¹‰å­¦å·é•¿åº¦*/
-#define SEX_NUMBER 3           /*å®šä¹‰æ€§åˆ«é•¿åº¦*/
-#define SCORE_NUMBER 3         /*å®šä¹‰æˆç»©é—¨æ•°ï¼Œæ­¤æ—¶ä½3é—¨*/
-#define MAX_STUDENT_NUMBER 100 /*å®šä¹‰æœ€å¤§å­¦ç”Ÿæ•°*/
+#define NAME_NUMBER 10         /*¶¨ÒåĞÕÃû×î´ó³¤¶È*/
+#define ID_NUMBER 9            /*¶¨ÒåÑ§ºÅ³¤¶È*/
+#define SEX_NUMBER 3           /*¶¨ÒåĞÔ±ğ³¤¶È*/
+#define SCORE_NUMBER 3         /*¶¨Òå³É¼¨ÃÅÊı£¬´ËÊ±Î»3ÃÅ*/
+#define MAX_STUDENT_NUMBER 100 /*¶¨Òå×î´óÑ§ÉúÊı*/
 
-int student_number = 0; /*è®°å½•æ­¤æ—¶å·²ç»å­˜å…¥çš„å­¦ç”Ÿä¸ªæ•°*/
+int student_number = 0; /*¼ÇÂ¼´ËÊ±ÒÑ¾­´æÈëµÄÑ§Éú¸öÊı*/
 
 struct student
 {
@@ -21,10 +21,10 @@ struct student
 };
 typedef struct student STUDENT;
 
-/*  å‡½æ•°åŠŸèƒ½ï¼š	åˆå§‹åŒ–ç»“æ„ä½“æ•°ç»„ï¼Œå°†æ–‡ä»¶ä¸­çš„ä¿¡æ¯å­˜å…¥æ•°ç»„ï¼Œå¹¶å°†student_numberè®¾ç½®ä¸ºå·²å­˜å…¥çš„äººæ•°
-	å‡½æ•°å‚æ•°ï¼š  æ–‡ä»¶æŒ‡é’ˆï¼ŒæŒ‡å‘æ“ä½œçš„æ–‡ä»¶	
-               ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/*  º¯Êı¹¦ÄÜ£º	³õÊ¼»¯½á¹¹ÌåÊı×é£¬½«ÎÄ¼şÖĞµÄĞÅÏ¢´æÈëÊı×é£¬²¢½«student_numberÉèÖÃÎªÒÑ´æÈëµÄÈËÊı
+	º¯Êı²ÎÊı£º  ÎÄ¼şÖ¸Õë£¬Ö¸Ïò²Ù×÷µÄÎÄ¼ş	
+               ½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void InitScore(FILE *fp, STUDENT *stu)
 {
@@ -32,64 +32,67 @@ void InitScore(FILE *fp, STUDENT *stu)
     STUDENT *p;
     for (i = 0, p = stu; p < p + MAX_STUDENT_NUMBER; p++)
     {
+
+        fscanf(fp, "%s%s%s%f%f%f", &p->name, &p->id, &p->sex, &p->score[0], &p->score[1], &p->score[2]);
         if (fgetc(fp) == EOF)
         {
             break;
         }
-        fscanf(fp, "%s%s%s%f%f%f", p->name, p->id, p->sex, p->score[0], p->score[1], p->score[2]);
         i++;
     }
     student_number = i;
 }
 
-/*  å‡½æ•°åŠŸèƒ½ï¼š	å‘datas.datæ–‡ä»¶çš„æœ«å°¾æ·»åŠ ä»é”®ç›˜è¾“å…¥å­¦ç”Ÿçš„å§“åã€å­¦å·ã€æ€§åˆ«ã€æˆç»©
-               å¹¶å°†student_number + 1
-	å‡½æ•°å‚æ•°ï¼š  æ–‡ä»¶æŒ‡é’ˆ	 
-               ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/*  º¯Êı¹¦ÄÜ£º	Ïòdatas.datÎÄ¼şµÄÄ©Î²Ìí¼Ó´Ó¼üÅÌÊäÈëÑ§ÉúµÄĞÕÃû¡¢Ñ§ºÅ¡¢ĞÔ±ğ¡¢³É¼¨
+               ²¢½«student_number + 1
+	º¯Êı²ÎÊı£º  ÎÄ¼şÖ¸Õë	 
+               ½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void AppendScore(FILE *fp, STUDENT *head)
 {
     STUDENT *p;
-
-    printf("\nè¾“å…¥å§“åï¼š");
-    scanf("%d", &p->name);
-    printf("è¾“å…¥å­¦å·ï¼š");
-    scanf("%s", p->id);
-
-    printf("è¾“å…¥è‹±è¯­æˆç»©ï¼š");
-    scanf("%f", p->score + 0);
-    printf("è¾“å…¥è®¡ç®—æœºæˆç»©ï¼š");
-    scanf("%f", p->score + 1);
-    printf("è¾“å…¥é«˜æ•°æˆç»©ï¼š");
-    scanf("%f", p->score + 2);
+    p = head;
+    printf("\nÊäÈëĞÕÃû£º");
+    scanf("%s", &(p + student_number)->name);
+    printf("ÊäÈëÑ§ºÅ£º");
+    scanf("%s", (p + student_number)->id);
+    printf("ÇëÊäÈëĞÔ±ğ£º");
+    scanf("%s", &(p + student_number)->sex);
+    printf("ÊäÈëÓ¢Óï³É¼¨£º");
+    scanf("%f", &(p + student_number)->score[0]);
+    printf("ÊäÈë¼ÆËã»ú³É¼¨£º");
+    scanf("%f", &(p + student_number)->score[1]);
+    printf("ÊäÈë¸ßÊı³É¼¨£º");
+    scanf("%f", &(p + student_number)->score[2]);
+    student_number++;
 }
 
-/*	å‡½æ•°åŠŸèƒ½ï¼š	æ‰“å°å½“å‰åœ¨datas.datæ–‡ä»¶ä¸­å­¦ç”Ÿçš„å§“åã€å­¦å·ã€æ€§åˆ«å’Œæˆç»©ç­‰ä¿¡æ¯
-	å‡½æ•°å‚æ•°ï¼š	ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/*	º¯Êı¹¦ÄÜ£º	´òÓ¡µ±Ç°ÔÚdatas.datÎÄ¼şÖĞÑ§ÉúµÄĞÕÃû¡¢Ñ§ºÅ¡¢ĞÔ±ğºÍ³É¼¨µÈĞÅÏ¢
+	º¯Êı²ÎÊı£º	½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void PrintScore(STUDENT *head)
 {
     STUDENT *p;
     int i;
 
-    printf("å§“å    å­¦å·        æ€§åˆ«    è‹±è¯­    è®¡ç®—æœº  é«˜æ•°\n"); /* æ‰“å°è¡¨å¤´ */
-    for (p = head; p < head + student_number; p++)                /* æ‰“å°student_numberä¸ªå­¦ç”Ÿçš„ä¿¡æ¯ */
+    printf("ĞÕÃû\tÑ§ºÅ\t\tĞÔ±ğ\tÓ¢Óï\t¼ÆËã»ú\t¸ßÊı\tÆ½¾ù·Ö\n"); /* ´òÓ¡±íÍ· */
+    for (p = head; p < head + student_number; p++)              /* ´òÓ¡student_number¸öÑ§ÉúµÄĞÅÏ¢ */
     {
         printf("%s\t", p->name);
         printf("%s\t", p->id);
         printf("%s\t", p->sex);
-        printf(".0f\t", p->score + 0);
-        printf(".0f\t", p->score + 1);
-        printf(".0f\t", p->score + 2);
+        printf("%.0f\t", p->score[0]);
+        printf("%.0f\t", p->score[1]);
+        printf("%.0f\t", p->score[2]);
         printf("%.1f\n", p->averageSCore);
     }
 }
 
-/* 	å‡½æ•°åŠŸèƒ½ï¼š	è®¡ç®—æ¯ä¸ªå­¦ç”Ÿ3é—¨åŠŸè¯¾çš„å¹³å‡æˆç»©
-	å‡½æ•°å‚æ•°ï¼š	ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/* 	º¯Êı¹¦ÄÜ£º	¼ÆËãÃ¿¸öÑ§Éú3ÃÅ¹¦¿ÎµÄÆ½¾ù³É¼¨
+	º¯Êı²ÎÊı£º	½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void TotalScore(STUDENT *head)
 {
@@ -108,10 +111,10 @@ void TotalScore(STUDENT *head)
     }
 }
 
-/* 	å‡½æ•°åŠŸèƒ½ï¼š	ç”¨é€‰æ‹©æ³•æŒ‰è‹±è¯­æˆç»©ç”±é«˜åˆ°ä½æ’åº
-	å‡½æ•°å‚æ•°ï¼š	ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-				æ•´å‹å˜é‡nï¼Œè¡¨ç¤ºå­¦ç”Ÿäººæ•°
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/* 	º¯Êı¹¦ÄÜ£º	ÓÃÑ¡Ôñ·¨°´Ó¢Óï³É¼¨ÓÉ¸ßµ½µÍÅÅĞò
+	º¯Êı²ÎÊı£º	½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+				ÕûĞÍ±äÁ¿n£¬±íÊ¾Ñ§ÉúÈËÊı
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void SortScore(STUDENT *head)
 {
@@ -137,10 +140,10 @@ void SortScore(STUDENT *head)
     }
 }
 
-/* 	å‡½æ•°åŠŸèƒ½ï¼š	æŸ¥æ‰¾å­¦ç”Ÿçš„å­¦å·
-	å‡½æ•°å‚æ•°ï¼š	ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-				æ•´å‹å˜é‡numï¼Œè¡¨ç¤ºè¦æŸ¥æ‰¾çš„å­¦å·
-	å‡½æ•°è¿”å›å€¼ï¼š	å¦‚æœæ‰¾åˆ°å­¦å·ï¼Œåˆ™è¿”å›å®ƒåœ¨ç»“æ„ä½“æ•°ç»„ä¸­çš„ä½ç½®ï¼Œå¦åˆ™è¿”å›-1
+/* 	º¯Êı¹¦ÄÜ£º	²éÕÒÑ§ÉúµÄÑ§ºÅ
+	º¯Êı²ÎÊı£º	½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+				ÕûĞÍ±äÁ¿num£¬±íÊ¾Òª²éÕÒµÄÑ§ºÅ
+	º¯Êı·µ»ØÖµ£º	Èç¹ûÕÒµ½Ñ§ºÅ£¬Ôò·µ»ØËüÔÚ½á¹¹ÌåÊı×éÖĞµÄÎ»ÖÃ£¬·ñÔò·µ»Ø-1
 */
 int SearchNum(STUDENT *head, char num[])
 {
@@ -154,48 +157,50 @@ int SearchNum(STUDENT *head, char num[])
     return -1;
 }
 
-/* 	å‡½æ•°åŠŸèƒ½ï¼š	æŒ‰å­¦å·æŸ¥æ‰¾å­¦ç”Ÿæˆç»©å¹¶æ˜¾ç¤ºæŸ¥æ‰¾ç»“æœ
-	å‡½æ•°å‚æ•°ï¼š	ç»“æ„ä½“æŒ‡é’ˆheadï¼ŒæŒ‡å‘å­˜å‚¨å­¦ç”Ÿä¿¡æ¯çš„ç»“æ„ä½“æ•°ç»„çš„é¦–åœ°å€
-	å‡½æ•°è¿”å›å€¼ï¼š	æ— 
+/* 	º¯Êı¹¦ÄÜ£º	°´Ñ§ºÅ²éÕÒÑ§Éú³É¼¨²¢ÏÔÊ¾²éÕÒ½á¹û
+	º¯Êı²ÎÊı£º	½á¹¹ÌåÖ¸Õëhead£¬Ö¸Ïò´æ´¢Ñ§ÉúĞÅÏ¢µÄ½á¹¹ÌåÊı×éµÄÊ×µØÖ·
+	º¯Êı·µ»ØÖµ£º	ÎŞ
 */
 void SearchScore(STUDENT *head)
 {
     char number[10], findNo;
 
-    printf("è¯·è¾“å…¥ä½ æƒ³è¦æŸ¥æ‰¾çš„å­¦ç”Ÿçš„å­¦å·ï¼š");
+    printf("ÇëÊäÈëÄãÏëÒª²éÕÒµÄÑ§ÉúµÄÑ§ºÅ£º");
     scanf("%s", number);
     findNo = SearchNum(head, number);
     if (findNo == -1)
     {
-        printf("\næ— æ³•æ‰¾åˆ°è¯¥æ–‡ä»¶ï¼\n");
+        printf("\nÎŞ·¨ÕÒµ½¸ÃÑ§Éú£¡\n");
     }
     else
     {
-        printf("%s\t%s\t%s\t%.0f\t%.0f\t%.0f", (head + findNo)->name,
+        printf("ĞÕÃû\tÑ§ºÅ\t\tĞÔ±ğ\tÓ¢Óï\t¼ÆËã»ú\t¸ßÊı\tÆ½¾ù·Ö\n"); /* ´òÓ¡±íÍ· */
+        printf("%s\t%s\t%s\t%.0f\t%.0f\t%.0f\t%.1f", (head + findNo)->name,
                (head + findNo)->id,
                (head + findNo)->sex,
-               (head + findNo)->score + 0,
-               (head + findNo)->score + 1,
-               (head + findNo)->score + 2);
+               (head + findNo)->score[0],
+               (head + findNo)->score[1],
+               (head + findNo)->score[2],
+               (head + findNo)->averageSCore);
     }
 }
 
-/*	å‡½æ•°åŠŸèƒ½ï¼š	æ˜¾ç¤ºèœå•å¹¶è·å¾—ç”¨æˆ·é”®ç›˜è¾“å…¥çš„é€‰é¡¹
-	å‡½æ•°å‚æ•°ï¼š	æ— 
-	å‡½æ•°è¿”å›å€¼ï¼š	ç”¨æˆ·è¾“å…¥çš„é€‰é¡¹
+/*	º¯Êı¹¦ÄÜ£º	ÏÔÊ¾²Ëµ¥²¢»ñµÃÓÃ»§¼üÅÌÊäÈëµÄÑ¡Ïî
+	º¯Êı²ÎÊı£º	ÎŞ
+	º¯Êı·µ»ØÖµ£º	ÓÃ»§ÊäÈëµÄÑ¡Ïî
 */
 char Menu(void)
 {
     char ch;
 
-    printf("\næ“ä½œæŒ‡å—\n");
-    printf(" 1.æ·»åŠ å­¦ç”Ÿ\n");
-    printf(" 2.æˆç»©è¡¨\n");
-    printf(" 3.æŸ¥æ‰¾\n");
-    printf(" 4.æ’åº\n");
-    printf(" 0.\n");
-    printf("è¯·è¾“å…¥ä¸€ä¸ªæŒ‡ä»¤ï¼š");
-    scanf(" %c", &ch); /*åœ¨%cå‰é¢åŠ ä¸€ä¸ªç©ºæ ¼ï¼Œå°†å­˜äºç¼“å†²åŒºä¸­çš„å›è½¦ç¬¦è¯»å…¥*/
+    printf("\n²Ù×÷²Ëµ¥\n");
+    printf(" 1.Ìí¼ÓÑ§Éú\n");
+    printf(" 2.³É¼¨±í\n");
+    printf(" 3.²éÕÒ\n");
+    printf(" 4.ÅÅĞò\n");
+    printf(" 0.ÍË³ö³ÌĞò\n");
+    printf("ÇëÊäÈëÒ»¸öÖ¸Áî£º");
+    scanf(" %c", &ch); /*ÔÚ%cÇ°Ãæ¼ÓÒ»¸ö¿Õ¸ñ£¬½«´æÓÚ»º³åÇøÖĞµÄ»Ø³µ·û¶ÁÈë*/
     return ch;
 }
 
@@ -204,33 +209,35 @@ int main()
     STUDENT stu[MAX_STUDENT_NUMBER];
     char ch;
     FILE *fp = fopen("F:\\Study\\IT\\C\\Project\\table\\datas.dat", "at+");
+
     InitScore(fp, stu);
+    TotalScore(stu);
     if (fp == NULL)
     {
-        printf("æ‰“å¼€æ–‡ä»¶å¤±è´¥ï¼\n");
+        printf("´ò¿ªÎÄ¼şÊ§°Ü£¡\n");
     }
     while (1)
     {
-        ch = Menu(); /* æ˜¾ç¤ºèœå•ï¼Œå¹¶è¯»å–ç”¨æˆ·è¾“å…¥ */
+        ch = Menu(); /* ÏÔÊ¾²Ëµ¥£¬²¢¶ÁÈ¡ÓÃ»§ÊäÈë */
         switch (ch)
         {
         case '1':
-            AppendScore(fp, stu); /* è°ƒç”¨æˆç»©æ·»åŠ æ¨¡å— */
+            AppendScore(fp, stu); /* µ÷ÓÃ³É¼¨Ìí¼ÓÄ£¿é */
             TotalScore(stu);
             break;
         case '2':
-            PrintScore(stu); /* è°ƒç”¨æˆç»©æ˜¾ç¤ºæ¨¡å— */
+            PrintScore(stu); /* µ÷ÓÃ³É¼¨ÏÔÊ¾Ä£¿é */
             break;
         case '3':
-            SearchScore(stu); /* è°ƒç”¨æŒ‰å­¦å·æŸ¥æ‰¾æ¨¡å— */
+            SearchScore(stu); /* µ÷ÓÃ°´Ñ§ºÅ²éÕÒÄ£¿é */
             break;
         case '4':
-            SortScore(stu); /* è°ƒç”¨æˆç»©æ’åºæ¨¡å— */
+            SortScore(stu); /* µ÷ÓÃ³É¼¨ÅÅĞòÄ£¿é */
             printf("\nSorted result\n");
-            PrintScore(stu); /* æ˜¾ç¤ºæˆç»©æ’åºç»“æœ */
+            PrintScore(stu); /* ÏÔÊ¾³É¼¨ÅÅĞò½á¹û */
             break;
         case '0':
-            exit(0); /* é€€å‡ºç¨‹åº */
+            exit(0); /* ÍË³ö³ÌĞò */
             printf("End of program!");
             break;
         default:
